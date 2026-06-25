@@ -1,0 +1,21 @@
+{
+  "name": "dev-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pure HTML/CSS/JS personal portfolio for a self-taught IT generalist. No build step, no runtime dependencies.",
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check app.js && node --check test/app.test.js",
+    "serve": "node --version >nul 2>&1 && npx --yes serve ."
+  },
+  "keywords": [
+    "portfolio",
+    "static-site",
+    "html",
+    "css",
+    "javascript",
+    "github-pages"
+  ],
+  "author": "githubuseradmin",
+  "license": "MIT"
+}

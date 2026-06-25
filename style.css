@@ -8,8 +8,35 @@
    whole palette can be retuned from one place.
    ========================================================================== */
 
-/* ----------------------------- Design tokens ----------------------------- */
+/* ----------------------------- Design tokens -----------------------------
+   Structural tokens (type, rhythm, motion) live in :root and never change.
+   Colour tokens are theme-scoped: the dark palette is the default (also kept
+   on :root as a safety net if data-theme is ever missing), and a light palette
+   layers in via [data-theme="light"]. The inline bootstrap in <head> sets
+   data-theme before first paint, so there is no flash of the wrong theme.
+   --------------------------------------------------------------------------- */
 :root {
+  /* Typography */
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code",
+    "Fira Code", Consolas, "Liberation Mono", monospace;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  /* Rhythm */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --maxw: 960px;
+  --gap: clamp(1rem, 4vw, 2rem);
+
+  /* Motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ----- Dark palette (default) ----- */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
   /* Surfaces — near-black with a faint blue-green cast */
   --bg: #080b0f;
   --bg-elev: #0d1218;
@@ -29,24 +56,56 @@
   --warn: #ffb454;
   --danger: #ff6b6b;
 
+  /* On-accent text colour (for filled buttons / chips on accent fills) */
+  --on-accent: #04140f;
+
   /* Lines & borders */
   --line: rgba(120, 200, 180, 0.14);
   --line-strong: rgba(120, 200, 180, 0.28);
 
-  /* Typography */
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code",
-    "Fira Code", Consolas, "Liberation Mono", monospace;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif;
+  /* Decorative overlay tuning */
+  --glow-1: rgba(0, 230, 168, 0.08);
+  --glow-2: rgba(47, 217, 255, 0.06);
+  --scanline-color: rgba(255, 255, 255, 0.025);
+  --scanline-blend: overlay;
+  --scanline-opacity: 0.5;
+}
 
-  /* Rhythm */
-  --radius: 10px;
-  --radius-sm: 6px;
-  --maxw: 960px;
-  --gap: clamp(1rem, 4vw, 2rem);
+/* ----- Light palette ----- */
+:root[data-theme="light"] {
+  color-scheme: light;
 
-  /* Motion */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Surfaces — soft off-white with a faint cool cast */
+  --bg: #f4f7f6;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #eef3f1;
+  --bg-terminal: #0e141a; /* keep the hero terminal dark for contrast/charm */
+
+  /* Text — dark ink on light surfaces (WCAG AA on --bg) */
+  --text: #15201d;
+  --text-dim: #3f5048;
+  --text-faint: #61736b;
+
+  /* Accents — darkened so they stay readable on light fills */
+  --accent: #00865f; /* green, darkened for contrast */
+  --accent-2: #0a7ea4; /* cyan, darkened for contrast */
+  --accent-soft: rgba(0, 134, 95, 0.1);
+  --accent-2-soft: rgba(10, 126, 164, 0.1);
+  --warn: #b56a00;
+  --danger: #c0392b;
+
+  --on-accent: #ffffff;
+
+  /* Lines & borders */
+  --line: rgba(20, 60, 50, 0.14);
+  --line-strong: rgba(20, 60, 50, 0.26);
+
+  /* Decorative overlay tuning — lighter touch in light mode */
+  --glow-1: rgba(0, 134, 95, 0.07);
+  --glow-2: rgba(10, 126, 164, 0.06);
+  --scanline-color: rgba(10, 30, 25, 0.03);
+  --scanline-blend: multiply;
+  --scanline-opacity: 0.4;
 }
 
 /* ------------------------------- Reset-ish ------------------------------- */
@@ -86,17 +145,11 @@ body {
   text-rendering: optimizeLegibility;
   /* Subtle radial "network glow" anchored top-center, fixed to viewport */
   background-image:
-    radial-gradient(
-      120% 80% at 50% -10%,
-      rgba(0, 230, 168, 0.08),
-      transparent 60%
-    ),
-    radial-gradient(
-      90% 60% at 90% 0%,
-      rgba(47, 217, 255, 0.06),
-      transparent 55%
-    );
+    radial-gradient(120% 80% at 50% -10%, var(--glow-1), transparent 60%),
+    radial-gradient(90% 60% at 90% 0%, var(--glow-2), transparent 55%);
   background-attachment: fixed;
+  /* Smoothly cross-fade text/surface colours when toggling themes */
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 
 a {
@@ -136,7 +189,7 @@ strong {
   z-index: 100;
   padding: 8px 14px;
   background: var(--accent);
-  color: #04140f;
+  color: var(--on-accent);
   font-family: var(--font-mono);
   font-weight: 700;
   border-radius: var(--radius-sm);
@@ -170,13 +223,13 @@ strong {
   pointer-events: none;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.025) 0,
-    rgba(255, 255, 255, 0.025) 1px,
+    var(--scanline-color) 0,
+    var(--scanline-color) 1px,
     transparent 1px,
     transparent 3px
   );
-  mix-blend-mode: overlay;
-  opacity: 0.5;
+  mix-blend-mode: var(--scanline-blend);
+  opacity: var(--scanline-opacity);
 }
 
 /* Keep real content above the decorative layers */
@@ -245,6 +298,50 @@ main,
 .nav__links a:hover {
   color: var(--accent);
   text-decoration: none;
+}
+
+/* Active section link: lit up + underlined while that section is in view.
+   Set by app.js (aria-current="page"); also works for :focus/:hover above. */
+.nav__links a[aria-current="page"] {
+  color: var(--accent);
+}
+.nav__links a[aria-current="page"]::after {
+  content: "";
+  display: block;
+  height: 2px;
+  margin-top: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+/* Theme toggle button — styled to sit quietly among the mono nav links */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1;
+  color: var(--text-dim);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 0.32rem 0.6rem;
+  cursor: pointer;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
+}
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.theme-toggle__icon {
+  font-size: 1rem;
+}
+/* Mirror the half-moon glyph in light mode so it reads as "the other theme" */
+:root[data-theme="light"] .theme-toggle__icon {
+  transform: scaleX(-1);
 }
 
 /* --------------------------------- Hero --------------------------------- */
@@ -394,7 +491,7 @@ main,
 }
 .btn--primary {
   background: var(--accent);
-  color: #04140f;
+  color: var(--on-accent);
   box-shadow: 0 8px 24px -10px rgba(0, 230, 168, 0.6);
 }
 .btn--primary:hover {

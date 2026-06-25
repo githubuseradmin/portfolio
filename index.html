@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <!-- Mobile-first: viewport must come before any layout-affecting CSS -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="color-scheme" content="dark light" />
 
   <!-- SEO / social preview -->
   <title>githubuseradmin — self-taught IT generalist</title>
@@ -32,6 +32,32 @@
     rel="stylesheet"
   />
 
+  <!--
+    Early theme bootstrap (runs before the stylesheet paints to avoid a
+    flash of the wrong theme). It resolves the saved preference, falling back
+    to the OS setting, and sets data-theme on <html>. Kept tiny and inline on
+    purpose; the full toggle logic lives in app.js. Wrapped in try/catch so a
+    blocked localStorage (private mode) can never break first paint.
+  -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var prefersLight =
+          typeof window.matchMedia === "function" &&
+          window.matchMedia("(prefers-color-scheme: light)").matches;
+        var theme = saved === "light" || saved === "dark"
+          ? saved
+          : prefersLight
+          ? "light"
+          : "dark";
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
+
   <link rel="stylesheet" href="style.css" />
 
   <!-- Inline SVG favicon: a green terminal prompt glyph, no extra request -->
@@ -56,9 +82,9 @@
         githubuseradmin
       </a>
       <ul class="nav__links">
-        <li><a href="#about">about</a></li>
-        <li><a href="#skills">skills</a></li>
-        <li><a href="#projects">projects</a></li>
+        <li><a href="#about" data-nav-link>about</a></li>
+        <li><a href="#skills" data-nav-link>skills</a></li>
+        <li><a href="#projects" data-nav-link>projects</a></li>
         <li>
           <a
             href="https://github.com/githubuseradmin"
@@ -66,6 +92,25 @@
             target="_blank"
             >github</a
           >
+        </li>
+        <li>
+          <!--
+            Theme toggle. Starts as a plain, accessible button; app.js wires up
+            the click handler and keeps the label/icon and aria-pressed in sync.
+            If JS is disabled the button simply does nothing and the default
+            dark theme stays in place.
+          -->
+          <button
+            id="theme-toggle"
+            class="theme-toggle"
+            type="button"
+            aria-pressed="false"
+            aria-label="Switch to light theme"
+            title="Toggle light / dark theme"
+          >
+            <span class="theme-toggle__icon" aria-hidden="true">◐</span>
+            <span class="theme-toggle__label">theme</span>
+          </button>
         </li>
       </ul>
     </nav>
@@ -156,6 +201,12 @@
             layer beneath the abstraction than memorize the abstraction. I care
             about clean architecture, optimization, and the edge cases everyone
             else skips.
+          </p>
+          <p>
+            Above all I value <strong>simplicity</strong>. Like Apple's design
+            philosophy, I believe the best design — and the best code — is the
+            simple one: easy to read, easy to reason about, with nothing left to
+            take away. Complexity is easy; clarity is the hard, worthwhile work.
           </p>
           <p class="about__lang">
             <span class="kv"><span class="kv__k">native</span> Russian</span>
@@ -349,6 +400,39 @@
                 <a
                   class="card__link"
                   href="https://github.com/githubuseradmin/logwatch"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">↗</span>
+                  Code
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- Card: dashboard -->
+          <li class="card">
+            <article aria-labelledby="p-dashboard">
+              <header class="card__head">
+                <span class="card__icon" aria-hidden="true">$</span>
+                <h3 id="p-dashboard" class="card__title">dashboard</h3>
+              </header>
+              <p class="card__blurb">
+                A full-stack authentication dashboard: sign-up and login with
+                2FA, role-based access, an admin panel and a built-in support
+                flow — the boring-but-essential plumbing every app needs.
+              </p>
+              <ul class="tags" aria-label="Tech stack">
+                <li class="tag">Flask</li>
+                <li class="tag">SQLite / MySQL</li>
+                <li class="tag">2FA</li>
+                <li class="tag">roles</li>
+                <li class="tag">admin</li>
+              </ul>
+              <div class="card__links">
+                <a
+                  class="card__link"
+                  href="https://github.com/githubuseradmin/dashboard"
                   rel="noopener"
                   target="_blank"
                 >
