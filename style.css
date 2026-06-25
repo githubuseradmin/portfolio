@@ -1,0 +1,699 @@
+/* ==========================================================================
+   githubuseradmin — portfolio stylesheet
+   --------------------------------------------------------------------------
+   Design language: dark "terminal / hacker / network" aesthetic.
+   Approach: mobile-first. Base rules target small screens; min-width media
+   queries layer on enhancements for larger viewports.
+   Theming: everything routes through CSS custom properties (see :root) so the
+   whole palette can be retuned from one place.
+   ========================================================================== */
+
+/* ----------------------------- Design tokens ----------------------------- */
+:root {
+  /* Surfaces — near-black with a faint blue-green cast */
+  --bg: #080b0f;
+  --bg-elev: #0d1218;
+  --bg-elev-2: #121922;
+  --bg-terminal: #0a0e13;
+
+  /* Text */
+  --text: #d6e0e4;
+  --text-dim: #8a9aa3;
+  --text-faint: #5b6a72;
+
+  /* Accents — green primary, cyan secondary (the "network" pair) */
+  --accent: #00e6a8; /* green */
+  --accent-2: #2fd9ff; /* cyan */
+  --accent-soft: rgba(0, 230, 168, 0.12);
+  --accent-2-soft: rgba(47, 217, 255, 0.12);
+  --warn: #ffb454;
+  --danger: #ff6b6b;
+
+  /* Lines & borders */
+  --line: rgba(120, 200, 180, 0.14);
+  --line-strong: rgba(120, 200, 180, 0.28);
+
+  /* Typography */
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code",
+    "Fira Code", Consolas, "Liberation Mono", monospace;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  /* Rhythm */
+  --radius: 10px;
+  --radius-sm: 6px;
+  --maxw: 960px;
+  --gap: clamp(1rem, 4vw, 2rem);
+
+  /* Motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------- Reset-ish ------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Respect users who ask for less motion: kill smooth scroll + animations */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Subtle radial "network glow" anchored top-center, fixed to viewport */
+  background-image:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      rgba(0, 230, 168, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      90% 60% at 90% 0%,
+      rgba(47, 217, 255, 0.06),
+      transparent 55%
+    );
+  background-attachment: fixed;
+}
+
+a {
+  color: var(--accent-2);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ----------------------- Accessibility utilities ----------------------- */
+
+/* Visible, strong focus ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Skip link: off-screen until focused */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -48px;
+  z-index: 100;
+  padding: 8px 14px;
+  background: var(--accent);
+  color: #04140f;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  transition: top 0.18s var(--ease);
+}
+.skip-link:focus {
+  top: 8px;
+  text-decoration: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ------------------------- Decorative scanlines ------------------------- */
+/* Very low-opacity horizontal lines + a faint vignette. Purely cosmetic,
+   marked aria-hidden in the markup and pointer-events:none so it never
+   interferes with interaction. */
+.fx-scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.025) 0,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+/* Keep real content above the decorative layers */
+.site-header,
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ------------------------------- Header/Nav ------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(8px);
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 11, 15, 0.92),
+    rgba(8, 11, 15, 0.72)
+  );
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0.75rem var(--gap);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav__brand {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+.nav__brand:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+.nav__prompt {
+  color: var(--accent);
+  margin-right: 0.35rem;
+}
+
+.nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.nav__links a {
+  color: var(--text-dim);
+  padding: 0.2rem 0;
+}
+.nav__links a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* --------------------------------- Hero --------------------------------- */
+.hero {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 9vw, 5rem) var(--gap) clamp(2rem, 7vw, 3.5rem);
+}
+.hero__inner {
+  max-width: 42rem;
+}
+
+/* Faux terminal window */
+.terminal {
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--bg-terminal);
+  box-shadow: 0 0 0 1px rgba(0, 230, 168, 0.04),
+    0 18px 50px -20px rgba(0, 230, 168, 0.25);
+  overflow: hidden;
+  margin-bottom: clamp(1.5rem, 5vw, 2.25rem);
+}
+.terminal__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--line);
+}
+.terminal__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--text-faint);
+}
+.terminal__dot--red {
+  background: #ff5f56;
+}
+.terminal__dot--amber {
+  background: #ffbd2e;
+}
+.terminal__dot--green {
+  background: #27c93f;
+}
+.terminal__title {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-faint);
+}
+.terminal__body {
+  padding: 1rem 1rem 1.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.terminal__line {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.terminal__line--output {
+  margin-top: 0.35rem;
+  min-height: 1.7em; /* reserve space so typewriter does not shift layout */
+  color: var(--accent);
+}
+.terminal__user {
+  color: var(--accent);
+}
+.terminal__host {
+  color: var(--accent-2);
+}
+.terminal__path {
+  color: var(--text-dim);
+}
+.terminal__cmd {
+  color: var(--text);
+}
+
+/* Blinking cursor that trails the typewriter text */
+.typewriter__cursor {
+  display: inline-block;
+  width: 0.6ch;
+  height: 1.05em;
+  margin-left: 1px;
+  background: var(--accent);
+  vertical-align: -0.18em;
+  animation: blink 1.05s steps(1) infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.hero__title {
+  font-size: clamp(2rem, 8vw, 3.25rem);
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(120deg, var(--text), var(--accent) 120%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero__tagline {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 3.5vw, 1.05rem);
+  color: var(--accent);
+  margin: 0 0 1.1rem;
+  letter-spacing: 0.02em;
+}
+.hero__tagline .dot {
+  color: var(--text-faint);
+  margin: 0 0.35rem;
+}
+.hero__intro {
+  color: var(--text-dim);
+  font-size: 1.02rem;
+  margin: 0 0 1.75rem;
+  max-width: 36rem;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.7rem 1.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  transition: transform 0.15s var(--ease), background 0.2s var(--ease),
+    border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+.btn--primary {
+  background: var(--accent);
+  color: #04140f;
+  box-shadow: 0 8px 24px -10px rgba(0, 230, 168, 0.6);
+}
+.btn--primary:hover {
+  box-shadow: 0 12px 30px -10px rgba(0, 230, 168, 0.75);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+.btn--ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ------------------------------- Sections ------------------------------- */
+.section {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 8vw, 4rem) var(--gap);
+}
+.section__inner {
+  max-width: 46rem;
+}
+.section__title {
+  font-family: var(--font-mono);
+  font-size: clamp(1.2rem, 5vw, 1.6rem);
+  margin: 0 0 1.5rem;
+  letter-spacing: 0.01em;
+}
+.section__hash {
+  color: var(--accent);
+  margin-right: 0.3rem;
+}
+
+/* --------------------------------- About -------------------------------- */
+.about p {
+  color: var(--text-dim);
+  margin: 0 0 1rem;
+}
+.about__lang {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.25rem;
+  margin-top: 1.25rem !important;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+.kv {
+  color: var(--text);
+}
+.kv__k {
+  color: var(--accent-2);
+  margin-right: 0.4rem;
+}
+.kv__k::after {
+  content: "=";
+  color: var(--text-faint);
+  margin-left: 0.4rem;
+}
+
+/* --------------------------------- Skills -------------------------------- */
+.skills {
+  display: grid;
+  gap: 1.75rem;
+}
+.skills__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+  margin: 0 0 0.85rem;
+}
+.skills__marker {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--text-faint);
+}
+.skills__marker--core {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.skills__marker--touched {
+  background: var(--accent-2);
+  box-shadow: 0 0 10px var(--accent-2);
+}
+.skills__marker--drawn {
+  background: var(--warn);
+  box-shadow: 0 0 10px var(--warn);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.chip {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  padding: 0.42rem 0.8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  color: var(--text-dim);
+  transition: transform 0.15s var(--ease), border-color 0.2s var(--ease),
+    color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.chip:hover {
+  transform: translateY(-2px);
+}
+/* Core chips lean green, "drawn to" chips lean cyan — visual grouping */
+.chip--core {
+  border-color: rgba(0, 230, 168, 0.35);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.chip--drawn {
+  border-color: rgba(47, 217, 255, 0.32);
+  color: var(--accent-2);
+  background: var(--accent-2-soft);
+}
+
+/* -------------------------------- Projects ------------------------------- */
+.projects {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  /* Mobile-first: single column. Enhanced to two columns below. */
+  grid-template-columns: 1fr;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: linear-gradient(
+    180deg,
+    var(--bg-elev),
+    var(--bg-elev-2)
+  );
+  padding: 1.25rem 1.3rem;
+  transition: transform 0.2s var(--ease), border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
+  position: relative;
+}
+.card::before {
+  /* Thin accent rule along the top, revealed on hover */
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+}
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  box-shadow: 0 22px 50px -28px rgba(0, 230, 168, 0.45);
+}
+.card:hover::before {
+  opacity: 1;
+}
+.card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.card__icon {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-weight: 700;
+}
+.card__title {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  margin: 0;
+  color: var(--text);
+}
+.card__blurb {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin: 0 0 0.9rem;
+}
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid rgba(0, 230, 168, 0.18);
+}
+.card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+.card__link {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.card__link:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+.card__link-icon {
+  color: var(--accent-2);
+}
+
+.projects__more {
+  margin-top: 1.5rem;
+  color: var(--text-faint);
+  font-size: 0.9rem;
+  font-family: var(--font-mono);
+}
+
+/* --------------------------------- Footer -------------------------------- */
+.site-footer {
+  border-top: 1px solid var(--line);
+  margin-top: clamp(2rem, 8vw, 4rem);
+}
+.site-footer__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 2rem var(--gap) 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}
+.site-footer__note,
+.site-footer__meta {
+  margin: 0;
+}
+
+/* ------------------------- Reveal-on-scroll ------------------------- */
+/* Initial hidden state. JS adds .is-visible via IntersectionObserver.
+   If JS never runs or motion is reduced, a fallback (see below + app.js)
+   guarantees content is shown. */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+/* Reduced-motion users: never hide content behind a transform */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================ Responsive ============================ */
+/* Tablet and up: two-column project grid, roomier nav */
+@media (min-width: 640px) {
+  .projects {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 760px) {
+  .nav {
+    flex-wrap: nowrap;
+  }
+  .nav__links {
+    font-size: 0.88rem;
+  }
+}

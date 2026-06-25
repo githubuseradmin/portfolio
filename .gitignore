@@ -1,0 +1,36 @@
+# ---------------------------------------------------------------------------
+# This is a dependency-free static site, so there isn't much to ignore.
+# These entries just keep OS, editor, and tooling cruft out of the repo.
+# ---------------------------------------------------------------------------
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.directory
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Logs / misc
+*.log
+npm-debug.log*
+
+# Optional local tooling (not used by this project, but harmless to ignore)
+node_modules/
+.cache/
+.tmp/

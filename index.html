@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Mobile-first: viewport must come before any layout-affecting CSS -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+
+  <!-- SEO / social preview -->
+  <title>githubuseradmin — self-taught IT generalist</title>
+  <meta
+    name="description"
+    content="Personal portfolio of a self-taught IT generalist focused on networking, security, low-level systems and DevOps."
+  />
+  <meta name="author" content="githubuseradmin" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="githubuseradmin — self-taught IT generalist" />
+  <meta
+    property="og:description"
+    content="Networking · security · low-level · DevOps. A curious generalist who likes to understand what happens under the hood."
+  />
+
+  <!--
+    One optional Google Font (JetBrains Mono) for the terminal accents.
+    preconnect speeds up the handshake; the page degrades gracefully to the
+    local monospace stack if the font fails to load (see --font-mono in style.css).
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Inline SVG favicon: a green terminal prompt glyph, no extra request -->
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230a0e12'/%3E%3Cpath d='M3 4l3 4-3 4M8 12h5' stroke='%2300e6a8' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"
+  />
+</head>
+
+<body>
+  <!-- Skip link for keyboard users; visually hidden until focused -->
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Decorative scanline / glow overlay, kept out of the accessibility tree -->
+  <div class="fx-scanlines" aria-hidden="true"></div>
+
+  <!-- ============================ HEADER / NAV ============================ -->
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary">
+      <a class="nav__brand" href="#hero">
+        <span class="nav__prompt" aria-hidden="true">&gt;_</span>
+        githubuseradmin
+      </a>
+      <ul class="nav__links">
+        <li><a href="#about">about</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li>
+          <a
+            href="https://github.com/githubuseradmin"
+            rel="noopener"
+            target="_blank"
+            >github</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ================================ HERO ================================ -->
+    <section id="hero" class="hero" aria-labelledby="hero-title">
+      <div class="hero__inner">
+        <!-- A faux terminal window framing the introduction -->
+        <div class="terminal" role="presentation">
+          <div class="terminal__bar" aria-hidden="true">
+            <span class="terminal__dot terminal__dot--red"></span>
+            <span class="terminal__dot terminal__dot--amber"></span>
+            <span class="terminal__dot terminal__dot--green"></span>
+            <span class="terminal__title">~/whoami</span>
+          </div>
+          <div class="terminal__body">
+            <p class="terminal__line">
+              <span class="terminal__user">guest</span>@<span
+                class="terminal__host"
+                >portfolio</span
+              >:<span class="terminal__path">~</span>$
+              <span class="terminal__cmd">whoami</span>
+            </p>
+            <!--
+              The typewriter text is injected by app.js for a live "typing"
+              effect. The <noscript>-style fallback inside ensures the tagline
+              is visible even before JS runs or if JS is disabled.
+            -->
+            <p class="terminal__line terminal__line--output">
+              <span id="typewriter" class="typewriter" aria-hidden="true"></span>
+              <span class="typewriter__cursor" aria-hidden="true"></span>
+            </p>
+          </div>
+        </div>
+
+        <h1 id="hero-title" class="hero__title">
+          Self-taught IT generalist
+        </h1>
+        <!-- Real, screen-reader-friendly tagline (the typewriter above is decorative) -->
+        <p class="hero__tagline">
+          networking
+          <span class="dot" aria-hidden="true">·</span> security
+          <span class="dot" aria-hidden="true">·</span> low-level
+          <span class="dot" aria-hidden="true">·</span> DevOps
+        </p>
+        <p class="hero__intro">
+          I like taking things apart to see how they actually work — packets,
+          processes, protocols and the layers underneath. Builder by curiosity,
+          generalist by choice.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#projects">View projects</a>
+          <a
+            class="btn btn--ghost"
+            href="https://github.com/githubuseradmin"
+            rel="noopener"
+            target="_blank"
+          >
+            GitHub
+            <span class="btn__icon" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================ ABOUT ================================ -->
+    <section id="about" class="section reveal" aria-labelledby="about-title">
+      <div class="section__inner">
+        <h2 id="about-title" class="section__title">
+          <span class="section__hash" aria-hidden="true">#</span> about
+        </h2>
+        <div class="about">
+          <p>
+            I have been self-taught since around 2013. It started where a lot of
+            people start — tinkering with <strong>Minecraft</strong> and
+            <strong>SA-MP</strong> servers — and that itch to change how things
+            behaved never went away.
+          </p>
+          <p>
+            From there the path wound through
+            <strong>PHP / backend</strong>, into <strong>Python</strong>, down
+            to <strong>Linux and networking</strong>, then toward
+            <strong>security</strong> — and lately building real things with the
+            help of AI. I am a curious generalist: I would rather understand the
+            layer beneath the abstraction than memorize the abstraction. I care
+            about clean architecture, optimization, and the edge cases everyone
+            else skips.
+          </p>
+          <p class="about__lang">
+            <span class="kv"><span class="kv__k">native</span> Russian</span>
+            <span class="kv"><span class="kv__k">english</span> basic, reading-focused</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================ SKILLS ================================ -->
+    <section id="skills" class="section reveal" aria-labelledby="skills-title">
+      <div class="section__inner">
+        <h2 id="skills-title" class="section__title">
+          <span class="section__hash" aria-hidden="true">#</span> skills
+        </h2>
+
+        <div class="skills">
+          <!-- Group: Core -->
+          <div class="skills__group">
+            <h3 class="skills__heading">
+              <span class="skills__marker skills__marker--core" aria-hidden="true"></span>
+              Core
+            </h3>
+            <ul class="chips" aria-label="Core skills">
+              <li class="chip chip--core">Python</li>
+              <li class="chip chip--core">Linux / VPS</li>
+              <li class="chip chip--core">Networking &amp; VPN</li>
+              <li class="chip chip--core">SQL</li>
+            </ul>
+          </div>
+
+          <!-- Group: Touched -->
+          <div class="skills__group">
+            <h3 class="skills__heading">
+              <span class="skills__marker skills__marker--touched" aria-hidden="true"></span>
+              Touched
+            </h3>
+            <ul class="chips" aria-label="Technologies I have touched">
+              <li class="chip">PHP</li>
+              <li class="chip">C / C++</li>
+              <li class="chip">a touch of Assembly</li>
+              <li class="chip">JS / HTML / CSS</li>
+              <li class="chip">Pawno</li>
+            </ul>
+          </div>
+
+          <!-- Group: Drawn to -->
+          <div class="skills__group">
+            <h3 class="skills__heading">
+              <span class="skills__marker skills__marker--drawn" aria-hidden="true"></span>
+              Drawn to
+            </h3>
+            <ul class="chips" aria-label="Areas I am drawn to">
+              <li class="chip chip--drawn">AI</li>
+              <li class="chip chip--drawn">DevOps</li>
+              <li class="chip chip--drawn">Sysadmin</li>
+              <li class="chip chip--drawn">Cybersecurity &amp; vulnerabilities</li>
+              <li class="chip chip--drawn">Low-level / system internals</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================ PROJECTS ================================ -->
+    <section id="projects" class="section reveal" aria-labelledby="projects-title">
+      <div class="section__inner">
+        <h2 id="projects-title" class="section__title">
+          <span class="section__hash" aria-hidden="true">#</span> projects
+        </h2>
+
+        <ul class="projects" role="list">
+          <!-- Card: netsec-toolkit -->
+          <li class="card">
+            <article aria-labelledby="p-netsec">
+              <header class="card__head">
+                <span class="card__icon" aria-hidden="true">$</span>
+                <h3 id="p-netsec" class="card__title">netsec-toolkit</h3>
+              </header>
+              <p class="card__blurb">
+                A Python CLI bundling small security &amp; networking utilities —
+                the kind of tooling you reach for during recon and triage.
+              </p>
+              <ul class="tags" aria-label="Tech stack">
+                <li class="tag">Python</li>
+                <li class="tag">CLI</li>
+                <li class="tag">networking</li>
+                <li class="tag">security</li>
+              </ul>
+              <div class="card__links">
+                <a
+                  class="card__link"
+                  href="https://github.com/githubuseradmin/netsec-toolkit"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">↗</span>
+                  Code
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- Card: https-explained -->
+          <li class="card">
+            <article aria-labelledby="p-https">
+              <header class="card__head">
+                <span class="card__icon" aria-hidden="true">$</span>
+                <h3 id="p-https" class="card__title">https-explained</h3>
+              </header>
+              <p class="card__blurb">
+                An interactive explainer that walks through the TLS handshake
+                step by step — certificates, key exchange, the whole padlock.
+              </p>
+              <ul class="tags" aria-label="Tech stack">
+                <li class="tag">JavaScript</li>
+                <li class="tag">TLS</li>
+                <li class="tag">education</li>
+              </ul>
+              <div class="card__links">
+                <a
+                  class="card__link"
+                  href="https://githubuseradmin.github.io/https-explained/"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">▶</span>
+                  Live demo
+                </a>
+                <a
+                  class="card__link"
+                  href="https://github.com/githubuseradmin/https-explained"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">↗</span>
+                  Code
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- Card: vps-bootstrap -->
+          <li class="card">
+            <article aria-labelledby="p-vps">
+              <header class="card__head">
+                <span class="card__icon" aria-hidden="true">$</span>
+                <h3 id="p-vps" class="card__title">vps-bootstrap</h3>
+              </header>
+              <p class="card__blurb">
+                An opinionated Bash script for hardening a fresh Ubuntu VPS —
+                users, SSH, firewall and the sensible defaults you always forget.
+              </p>
+              <ul class="tags" aria-label="Tech stack">
+                <li class="tag">Bash</li>
+                <li class="tag">Ubuntu</li>
+                <li class="tag">hardening</li>
+                <li class="tag">DevOps</li>
+              </ul>
+              <div class="card__links">
+                <a
+                  class="card__link"
+                  href="https://github.com/githubuseradmin/vps-bootstrap"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">↗</span>
+                  Code
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- Card: logwatch -->
+          <li class="card">
+            <article aria-labelledby="p-logwatch">
+              <header class="card__head">
+                <span class="card__icon" aria-hidden="true">$</span>
+                <h3 id="p-logwatch" class="card__title">logwatch</h3>
+              </header>
+              <p class="card__blurb">
+                A Python log-analysis tool that surfaces suspicious patterns —
+                brute-force attempts, anomalies and the noise worth alerting on.
+              </p>
+              <ul class="tags" aria-label="Tech stack">
+                <li class="tag">Python</li>
+                <li class="tag">log analysis</li>
+                <li class="tag">security</li>
+              </ul>
+              <div class="card__links">
+                <a
+                  class="card__link"
+                  href="https://github.com/githubuseradmin/logwatch"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">↗</span>
+                  Code
+                </a>
+              </div>
+            </article>
+          </li>
+        </ul>
+
+        <p class="projects__more">
+          More experiments and works-in-progress live on
+          <a
+            href="https://github.com/githubuseradmin"
+            rel="noopener"
+            target="_blank"
+            >github.com/githubuseradmin</a
+          >.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================================ FOOTER ================================ -->
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p class="site-footer__note">
+        Built with AI assistance · hand-checked.
+      </p>
+      <p class="site-footer__meta">
+        <span id="year">2026</span> ·
+        <a
+          href="https://github.com/githubuseradmin"
+          rel="noopener"
+          target="_blank"
+          >github.com/githubuseradmin</a
+        >
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
