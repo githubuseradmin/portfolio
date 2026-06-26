@@ -34,3 +34,6 @@ npm-debug.log*
 node_modules/
 .cache/
 .tmp/
+
+# Local preview / harness config (dev server launch settings)
+.claude/

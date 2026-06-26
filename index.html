@@ -280,7 +280,7 @@
 
         <ul class="projects" role="list">
           <!-- Card: netsec-toolkit -->
-          <li class="card">
+          <li class="card" data-project="netsec-toolkit">
             <article aria-labelledby="p-netsec">
               <header class="card__head">
                 <span class="card__icon" aria-hidden="true">$</span>
@@ -297,6 +297,10 @@
                 <li class="tag">security</li>
               </ul>
               <div class="card__links">
+                <button class="card__walk" type="button" data-pf-open="netsec-toolkit">
+                  <span class="card__link-icon" aria-hidden="true">◆</span>
+                  Walkthrough
+                </button>
                 <a
                   class="card__link"
                   href="https://github.com/githubuseradmin/netsec-toolkit"
@@ -311,7 +315,7 @@
           </li>
 
           <!-- Card: https-explained -->
-          <li class="card">
+          <li class="card" data-project="https-explained">
             <article aria-labelledby="p-https">
               <header class="card__head">
                 <span class="card__icon" aria-hidden="true">$</span>
@@ -327,6 +331,10 @@
                 <li class="tag">education</li>
               </ul>
               <div class="card__links">
+                <button class="card__walk" type="button" data-pf-open="https-explained">
+                  <span class="card__link-icon" aria-hidden="true">◆</span>
+                  Walkthrough
+                </button>
                 <a
                   class="card__link"
                   href="https://githubuseradmin.github.io/https-explained/"
@@ -350,7 +358,7 @@
           </li>
 
           <!-- Card: vps-bootstrap -->
-          <li class="card">
+          <li class="card" data-project="vps-bootstrap">
             <article aria-labelledby="p-vps">
               <header class="card__head">
                 <span class="card__icon" aria-hidden="true">$</span>
@@ -367,6 +375,10 @@
                 <li class="tag">DevOps</li>
               </ul>
               <div class="card__links">
+                <button class="card__walk" type="button" data-pf-open="vps-bootstrap">
+                  <span class="card__link-icon" aria-hidden="true">◆</span>
+                  Walkthrough
+                </button>
                 <a
                   class="card__link"
                   href="https://github.com/githubuseradmin/vps-bootstrap"
@@ -381,7 +393,7 @@
           </li>
 
           <!-- Card: logwatch -->
-          <li class="card">
+          <li class="card" data-project="logwatch">
             <article aria-labelledby="p-logwatch">
               <header class="card__head">
                 <span class="card__icon" aria-hidden="true">$</span>
@@ -397,6 +409,10 @@
                 <li class="tag">security</li>
               </ul>
               <div class="card__links">
+                <button class="card__walk" type="button" data-pf-open="logwatch">
+                  <span class="card__link-icon" aria-hidden="true">◆</span>
+                  Walkthrough
+                </button>
                 <a
                   class="card__link"
                   href="https://github.com/githubuseradmin/logwatch"
@@ -411,7 +427,7 @@
           </li>
 
           <!-- Card: dashboard -->
-          <li class="card">
+          <li class="card" data-project="dashboard">
             <article aria-labelledby="p-dashboard">
               <header class="card__head">
                 <span class="card__icon" aria-hidden="true">$</span>
@@ -430,6 +446,10 @@
                 <li class="tag">admin</li>
               </ul>
               <div class="card__links">
+                <button class="card__walk" type="button" data-pf-open="dashboard">
+                  <span class="card__link-icon" aria-hidden="true">◆</span>
+                  Walkthrough
+                </button>
                 <a
                   class="card__link"
                   href="https://github.com/githubuseradmin/dashboard"
@@ -438,6 +458,149 @@
                 >
                   <span class="card__link-icon" aria-hidden="true">↗</span>
                   Code
+                </a>
+              </div>
+            </article>
+          </li>
+          <!-- Card: telegram-booking-bot (applied demo) -->
+          <li class="card" data-project="booking-bot">
+            <article aria-labelledby="p-booking">
+              <header class="card__head">
+                <span class="card__icon" aria-hidden="true">▶</span>
+                <h3 id="p-booking" class="card__title">telegram-booking-bot</h3>
+                <span class="card__badge">demo</span>
+              </header>
+              <p class="card__blurb">
+                A Telegram bot + Mini App that books a service, master and free
+                time slot for a small studio — with reminders before the visit.
+              </p>
+              <ul class="tags" aria-label="Tech stack">
+                <li class="tag">aiogram</li>
+                <li class="tag">Mini App</li>
+                <li class="tag">SQLite</li>
+                <li class="tag">APScheduler</li>
+              </ul>
+              <div class="card__links">
+                <button class="card__walk" type="button" data-pf-open="booking-bot">
+                  <span class="card__link-icon" aria-hidden="true">◆</span>
+                  Walkthrough
+                </button>
+                <a
+                  class="card__link"
+                  href="https://githubuseradmin.github.io/telegram-booking-bot-test/"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">▶</span>
+                  Live demo
+                </a>
+                <a
+                  class="card__link"
+                  href="https://github.com/githubuseradmin/telegram-booking-bot-test"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">↗</span>
+                  Code
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- Card: landing + n8n lead automation -->
+          <li class="card" data-project="lead-automation">
+            <article aria-labelledby="p-lead">
+              <header class="card__head">
+                <span class="card__icon" aria-hidden="true">▶</span>
+                <h3 id="p-lead" class="card__title">landing + n8n</h3>
+                <span class="card__badge">demo</span>
+              </header>
+              <p class="card__blurb">
+                A barbershop landing page whose form feeds an n8n workflow —
+                normalize → Google Sheets → GPT-4o-mini → Telegram alert.
+              </p>
+              <ul class="tags" aria-label="Tech stack">
+                <li class="tag">n8n</li>
+                <li class="tag">webhook</li>
+                <li class="tag">OpenAI</li>
+                <li class="tag">automation</li>
+              </ul>
+              <div class="card__links">
+                <button class="card__walk" type="button" data-pf-open="lead-automation">
+                  <span class="card__link-icon" aria-hidden="true">◆</span>
+                  Walkthrough
+                </button>
+                <a
+                  class="card__link"
+                  href="https://githubuseradmin.github.io/landing-demo/"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">▶</span>
+                  Live landing
+                </a>
+                <a
+                  class="card__link"
+                  href="https://github.com/githubuseradmin/landing-demo"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">↗</span>
+                  Code
+                </a>
+              </div>
+            </article>
+          </li>
+
+          <!-- Card: browser games (throwaway test demos) -->
+          <li class="card" data-project="game-lab">
+            <article aria-labelledby="p-games">
+              <header class="card__head">
+                <span class="card__icon" aria-hidden="true">▶</span>
+                <h3 id="p-games" class="card__title">browser games</h3>
+                <span class="card__badge card__badge--test">test · demo</span>
+              </header>
+              <p class="card__blurb">
+                Three zero-dependency single-file toys: an unbeatable tic-tac-toe
+                (minimax), a block puzzle, and a procedural art + sound generator.
+              </p>
+              <ul class="tags" aria-label="Tech stack">
+                <li class="tag">HTML/JS</li>
+                <li class="tag">minimax</li>
+                <li class="tag">SVG</li>
+                <li class="tag">Web Audio</li>
+              </ul>
+              <div class="card__links">
+                <button class="card__walk" type="button" data-pf-open="game-lab">
+                  <span class="card__link-icon" aria-hidden="true">◆</span>
+                  Walkthrough
+                </button>
+                <a
+                  class="card__link"
+                  href="https://githubuseradmin.github.io/tic-tac-toe-2-test/"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">▶</span>
+                  tic-tac-toe
+                </a>
+                <a
+                  class="card__link"
+                  href="https://githubuseradmin.github.io/block-blast-test/"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">▶</span>
+                  block-blast
+                </a>
+                <a
+                  class="card__link"
+                  href="https://githubuseradmin.github.io/asset-lab-test/"
+                  rel="noopener"
+                  target="_blank"
+                >
+                  <span class="card__link-icon" aria-hidden="true">▶</span>
+                  asset-lab
                 </a>
               </div>
             </article>
@@ -475,6 +638,9 @@
     </div>
   </footer>
 
+  <!-- Project data (walkthrough overlays) loads before the behaviour script;
+       both use defer, so load order is preserved. -->
+  <script src="projects.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 </html>
