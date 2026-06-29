@@ -251,6 +251,53 @@
 
     /* ----------------------------------------------------------------- */
     {
+      id: "sentinel",
+      name: "sentinel",
+      icon: "$",
+      summary:
+        "A zero-dependency, self-hosted uptime / TLS monitor with Telegram " +
+        "alerts. Plugin sensors emit events into one core — SQLite store, " +
+        "alerter and status page — and a debounced state machine pages you on " +
+        "real outages, not blips.",
+      stack: ["Python", "stdlib only", "SQLite", "Telegram"],
+      stats: [
+        { k: "tests", v: "106" },
+        { k: "deps", v: "0" },
+        { k: "checks", v: "4" }
+      ],
+      highlights: [
+        "Checks HTTP · TCP · TLS (cert expiry) · DNS, per-target thresholds",
+        "Debounced state machine (hysteresis): alerts on transitions, not flaps",
+        "Telegram + console alerts; SQLite history → uptime % and incidents",
+        "Daemon or one-shot for cron/CI (exit 0/1/2) + a static dark status page",
+        "Plugin sensor seam — an SSH honeypot sensor drops into the same core next"
+      ],
+      diagram: {
+        viewBox: "0 0 680 232",
+        nodes: [
+          { id: "hp", x: 10, y: 10, label: "ssh honeypot\n(next sensor)", kind: "ext" },
+          { id: "up", x: 10, y: 96, label: "uptime sensor\nHTTP·TCP·TLS·DNS", kind: "io" },
+          { id: "core", x: 265, y: 96, label: "core\nstate machine", kind: "core" },
+          { id: "db", x: 510, y: 10, label: "SQLite\nevents · incidents", kind: "store" },
+          { id: "al", x: 510, y: 96, label: "alerts\nTelegram · console", kind: "out" },
+          { id: "st", x: 510, y: 172, label: "status page\nHTML", kind: "out" }
+        ],
+        edges: [
+          { from: "up", to: "core" },
+          { from: "hp", to: "core", kind: "dep" },
+          { from: "core", to: "db" },
+          { from: "core", to: "al" },
+          { from: "core", to: "st" }
+        ]
+      },
+      links: [
+        { label: "Code", kind: "code", href: GH + "/sentinel" },
+        { label: "README", kind: "readme", href: GH + "/sentinel#readme" }
+      ]
+    },
+
+    /* ----------------------------------------------------------------- */
+    {
       id: "booking-bot",
       name: "telegram-booking-bot",
       icon: "▶",
