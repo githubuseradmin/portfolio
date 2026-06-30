@@ -613,6 +613,142 @@
     syncFromHash(); // honour a deep link on first load
   }
 
+  /* ----------------------------------------------------------------------
+   * 7. Per-project animated motifs
+   * --------------------------------------------------------------------
+   * motifs.js exposes a small animated SVG per project id. Inject each into
+   * its card's .card__art banner. Purely decorative and progressive: with no
+   * JS (or no motif) the cards simply render without the art.
+   * -------------------------------------------------------------------- */
+  function initMotifs() {
+    var motifs =
+      (typeof window !== "undefined" && window.PORTFOLIO_MOTIFS) || null;
+    if (!motifs) return;
+    var cards = document.querySelectorAll(".card[data-project]");
+    for (var i = 0; i < cards.length; i++) {
+      var id = cards[i].getAttribute("data-project");
+      var svg = motifs[id];
+      if (!svg) continue;
+      var article = cards[i].querySelector("article") || cards[i];
+      if (article.querySelector(".card__art")) continue; // idempotent
+      var art = document.createElement("div");
+      art.className = "card__art";
+      art.setAttribute("aria-hidden", "true");
+      art.innerHTML = svg;
+      article.insertBefore(art, article.firstChild);
+    }
+  }
+
+  /* ----------------------------------------------------------------------
+   * 8. Language toggle (EN ↔ RU)
+   * --------------------------------------------------------------------
+   * English is the default and lives in the HTML. Elements marked with
+   * data-i18n get their innerHTML swapped to Russian on demand; the choice
+   * is persisted. Technical content (project cards, walkthroughs) stays in
+   * English on purpose — this is a light switch for the page chrome/prose.
+   * -------------------------------------------------------------------- */
+  var I18N_RU = {
+    "nav.about": "обо мне",
+    "nav.skills": "навыки",
+    "nav.principles": "принципы",
+    "nav.projects": "проекты",
+    "hero.title": "Самоучка-универсал в IT",
+    "hero.intro":
+      "Люблю разбирать вещи, чтобы понять, как они работают на самом деле — " +
+      "пакеты, процессы, протоколы и слои под ними. Строю из любопытства, " +
+      "универсал по выбору.",
+    "hero.cta": "Смотреть проекты",
+    "sec.about": '<span class="section__hash" aria-hidden="true">#</span> обо мне',
+    "sec.skills": '<span class="section__hash" aria-hidden="true">#</span> навыки',
+    "sec.principles": '<span class="section__hash" aria-hidden="true">#</span> принципы',
+    "sec.projects": '<span class="section__hash" aria-hidden="true">#</span> проекты',
+    "about.p1":
+      "Учусь сам примерно с 2013 года. Началось как у многих — с ковыряния " +
+      "серверов <strong>Minecraft</strong> и <strong>SA-MP</strong> — и тяга " +
+      "менять то, как всё работает, с тех пор не пропала.",
+    "about.p2":
+      "Дальше путь шёл через <strong>PHP / бэкенд</strong>, в " +
+      "<strong>Python</strong>, вниз к <strong>Linux и сетям</strong>, затем к " +
+      "<strong>безопасности</strong> — а в последнее время собираю реальные " +
+      "вещи с помощью ИИ. Я любопытный универсал: лучше пойму слой под " +
+      "абстракцией, чем заучу саму абстракцию. Мне важны чистая архитектура, " +
+      "оптимизация и граничные случаи, которые все пропускают.",
+    "about.p3":
+      "Больше всего ценю <strong>простоту</strong>. Как в философии дизайна " +
+      "Apple, верю: лучший дизайн — и лучший код — это простой: легко читать, " +
+      "легко рассуждать, и нечего убрать. Сложность даётся легко; ясность — " +
+      "трудная и стоящая работа.",
+    "skills.core":
+      '<span class="skills__marker skills__marker--core" aria-hidden="true"></span> Основное',
+    "skills.touched":
+      '<span class="skills__marker skills__marker--touched" aria-hidden="true"></span> Трогал',
+    "skills.drawn":
+      '<span class="skills__marker skills__marker--drawn" aria-hidden="true"></span> Тянет к',
+    "pr.intro": "Несколько принципов, к которым я постоянно возвращаюсь.",
+    "pr.simple.t": "Сначала простота",
+    "pr.simple.b":
+      "Лучший код — простой: легко читать, легко рассуждать, и из него нечего убрать.",
+    "pr.stdlib.t": "Stdlib-first, мало зависимостей",
+    "pr.stdlib.b":
+      "Сначала стандартная библиотека, потом — новая зависимость: меньше " +
+      "движущихся частей, меньше что ломать.",
+    "pr.tested.t": "Под тестами",
+    "pr.tested.b":
+      "Если выпускаю — значит покрыто тестами, и я их реально прогоняю перед «готово».",
+    "pr.secure.t": "Безопасность по умолчанию",
+    "pr.secure.b":
+      "Секреты в env, не в репозитории; безопасные дефолты; и мысль о граничных случаях.",
+    "pr.hood.t": "Понимать под капотом",
+    "pr.hood.b":
+      "Лучше понять слой под абстракцией, чем заучить саму абстракцию.",
+    "pr.ship.t": "Выпустить и довести",
+    "pr.ship.b": "Сначала заработало и в прод, потом — делаю лучше.",
+    "projects.more":
+      "Больше экспериментов и проектов в работе — на " +
+      '<a href="https://github.com/githubuseradmin" rel="noopener" target="_blank">github.com/githubuseradmin</a>.',
+    "footer.note": "Собрано с помощью ИИ · проверено руками."
+  };
+
+  function applyLang(lang) {
+    var els = document.querySelectorAll("[data-i18n]");
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.getAttribute("data-i18n-en") === null) {
+        el.setAttribute("data-i18n-en", "1");
+        el._enHTML = el.innerHTML; // capture the English source once
+      }
+      var key = el.getAttribute("data-i18n");
+      if (lang === "ru" && I18N_RU[key] != null) {
+        el.innerHTML = I18N_RU[key];
+      } else {
+        el.innerHTML = el._enHTML;
+      }
+    }
+    document.documentElement.setAttribute("lang", lang);
+    var btns = document.querySelectorAll(".lang-toggle button[data-lang]");
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].setAttribute(
+        "aria-pressed",
+        btns[j].getAttribute("data-lang") === lang ? "true" : "false"
+      );
+    }
+  }
+
+  function initI18n() {
+    var saved = readStored("lang");
+    applyLang(saved === "ru" ? "ru" : "en");
+
+    var toggle = document.querySelector(".lang-toggle");
+    if (!toggle) return;
+    toggle.addEventListener("click", function (e) {
+      var btn = e.target.closest("button[data-lang]");
+      if (!btn) return;
+      var lang = btn.getAttribute("data-lang");
+      applyLang(lang);
+      writeStored("lang", lang);
+    });
+  }
+
   /* --------------------------------- Boot --------------------------------- */
   function init() {
     initTheme();
@@ -620,7 +756,9 @@
     initReveal();
     initActiveNav();
     initTypewriter();
+    initMotifs();
     initProjects();
+    initI18n();
   }
 
   // Run after DOM is parsed. Because the script is loaded with `defer`, the

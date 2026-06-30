@@ -82,9 +82,10 @@
         githubuseradmin
       </a>
       <ul class="nav__links">
-        <li><a href="#about" data-nav-link>about</a></li>
-        <li><a href="#skills" data-nav-link>skills</a></li>
-        <li><a href="#projects" data-nav-link>projects</a></li>
+        <li><a href="#about" data-nav-link data-i18n="nav.about">about</a></li>
+        <li><a href="#skills" data-nav-link data-i18n="nav.skills">skills</a></li>
+        <li><a href="#principles" data-nav-link data-i18n="nav.principles">principles</a></li>
+        <li><a href="#projects" data-nav-link data-i18n="nav.projects">projects</a></li>
         <li>
           <a
             href="https://github.com/githubuseradmin"
@@ -92,6 +93,13 @@
             target="_blank"
             >github</a
           >
+        </li>
+        <li>
+          <!-- Discreet EN/RU language switch (English is the default). -->
+          <span class="lang-toggle" role="group" aria-label="Language">
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            <button type="button" data-lang="ru" aria-pressed="false">RU</button>
+          </span>
         </li>
         <li>
           <!--
@@ -119,6 +127,7 @@
   <main id="main">
     <!-- ================================ HERO ================================ -->
     <section id="hero" class="hero" aria-labelledby="hero-title">
+      <div class="hero__grid" aria-hidden="true"></div>
       <div class="hero__inner">
         <!-- A faux terminal window framing the introduction -->
         <div class="terminal" role="presentation">
@@ -148,7 +157,7 @@
           </div>
         </div>
 
-        <h1 id="hero-title" class="hero__title">
+        <h1 id="hero-title" class="hero__title" data-i18n="hero.title">
           Self-taught IT generalist
         </h1>
         <!-- Real, screen-reader-friendly tagline (the typewriter above is decorative) -->
@@ -158,14 +167,14 @@
           <span class="dot" aria-hidden="true">·</span> low-level
           <span class="dot" aria-hidden="true">·</span> DevOps
         </p>
-        <p class="hero__intro">
+        <p class="hero__intro" data-i18n="hero.intro">
           I like taking things apart to see how they actually work — packets,
           processes, protocols and the layers underneath. Builder by curiosity,
           generalist by choice.
         </p>
 
         <div class="hero__actions">
-          <a class="btn btn--primary" href="#projects">View projects</a>
+          <a class="btn btn--primary" href="#projects" data-i18n="hero.cta">View projects</a>
           <a
             class="btn btn--ghost"
             href="https://github.com/githubuseradmin"
@@ -182,17 +191,17 @@
     <!-- ================================ ABOUT ================================ -->
     <section id="about" class="section reveal" aria-labelledby="about-title">
       <div class="section__inner">
-        <h2 id="about-title" class="section__title">
+        <h2 id="about-title" class="section__title" data-i18n="sec.about">
           <span class="section__hash" aria-hidden="true">#</span> about
         </h2>
         <div class="about">
-          <p>
+          <p data-i18n="about.p1">
             I have been self-taught since around 2013. It started where a lot of
             people start — tinkering with <strong>Minecraft</strong> and
             <strong>SA-MP</strong> servers — and that itch to change how things
             behaved never went away.
           </p>
-          <p>
+          <p data-i18n="about.p2">
             From there the path wound through
             <strong>PHP / backend</strong>, into <strong>Python</strong>, down
             to <strong>Linux and networking</strong>, then toward
@@ -202,7 +211,7 @@
             about clean architecture, optimization, and the edge cases everyone
             else skips.
           </p>
-          <p>
+          <p data-i18n="about.p3">
             Above all I value <strong>simplicity</strong>. Like Apple's design
             philosophy, I believe the best design — and the best code — is the
             simple one: easy to read, easy to reason about, with nothing left to
@@ -219,14 +228,14 @@
     <!-- ================================ SKILLS ================================ -->
     <section id="skills" class="section reveal" aria-labelledby="skills-title">
       <div class="section__inner">
-        <h2 id="skills-title" class="section__title">
+        <h2 id="skills-title" class="section__title" data-i18n="sec.skills">
           <span class="section__hash" aria-hidden="true">#</span> skills
         </h2>
 
         <div class="skills">
           <!-- Group: Core -->
           <div class="skills__group">
-            <h3 class="skills__heading">
+            <h3 class="skills__heading" data-i18n="skills.core">
               <span class="skills__marker skills__marker--core" aria-hidden="true"></span>
               Core
             </h3>
@@ -240,7 +249,7 @@
 
           <!-- Group: Touched -->
           <div class="skills__group">
-            <h3 class="skills__heading">
+            <h3 class="skills__heading" data-i18n="skills.touched">
               <span class="skills__marker skills__marker--touched" aria-hidden="true"></span>
               Touched
             </h3>
@@ -255,7 +264,7 @@
 
           <!-- Group: Drawn to -->
           <div class="skills__group">
-            <h3 class="skills__heading">
+            <h3 class="skills__heading" data-i18n="skills.drawn">
               <span class="skills__marker skills__marker--drawn" aria-hidden="true"></span>
               Drawn to
             </h3>
@@ -271,10 +280,72 @@
       </div>
     </section>
 
+    <!-- ============================== PRINCIPLES ============================== -->
+    <section id="principles" class="section reveal" aria-labelledby="principles-title">
+      <div class="section__inner">
+        <h2 id="principles-title" class="section__title" data-i18n="sec.principles">
+          <span class="section__hash" aria-hidden="true">#</span> principles
+        </h2>
+        <p class="about__intro" data-i18n="pr.intro" style="color:var(--text-dim);margin:-.5rem 0 1.5rem">
+          A few principles I keep coming back to.
+        </p>
+
+        <div class="principles">
+          <div class="principle">
+            <span class="principle__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect class="m-line" x="4" y="4" width="16" height="16" rx="3"/><line class="m-line" x1="8" y1="12" x2="16" y2="12"/></svg></span>
+            <div>
+              <h3 class="principle__title" data-i18n="pr.simple.t">Simplicity first</h3>
+              <p class="principle__body" data-i18n="pr.simple.b">The best code is the simple one — easy to read, easy to reason about, with nothing left to take away.</p>
+            </div>
+          </div>
+
+          <div class="principle">
+            <span class="principle__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path class="m-line" d="M12 3 L21 8 L12 13 L3 8 Z"/><path class="m-line" d="M3 12 L12 17 L21 12"/></svg></span>
+            <div>
+              <h3 class="principle__title" data-i18n="pr.stdlib.t">Stdlib-first, few dependencies</h3>
+              <p class="principle__body" data-i18n="pr.stdlib.b">Reach for the standard library before adding a dependency — fewer moving parts, less to break.</p>
+            </div>
+          </div>
+
+          <div class="principle">
+            <span class="principle__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle class="m-line" cx="12" cy="12" r="9"/><path class="m-line" d="M7.5 12.5 l3 3 L16.5 9"/></svg></span>
+            <div>
+              <h3 class="principle__title" data-i18n="pr.tested.t">Tested &amp; verified</h3>
+              <p class="principle__body" data-i18n="pr.tested.b">If it ships, it has tests — and I actually run them before calling it done.</p>
+            </div>
+          </div>
+
+          <div class="principle">
+            <span class="principle__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect class="m-line" x="5" y="11" width="14" height="9" rx="2"/><path class="m-line" d="M8 11 V8 a4 4 0 0 1 8 0 V11"/></svg></span>
+            <div>
+              <h3 class="principle__title" data-i18n="pr.secure.t">Secure by default</h3>
+              <p class="principle__body" data-i18n="pr.secure.b">Secrets in env, never in the repo; safe defaults; and a thought for the edge cases.</p>
+            </div>
+          </div>
+
+          <div class="principle">
+            <span class="principle__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><circle class="m-line" cx="11" cy="11" r="6"/><line class="m-line" x1="15.5" y1="15.5" x2="20" y2="20"/></svg></span>
+            <div>
+              <h3 class="principle__title" data-i18n="pr.hood.t">Understand under the hood</h3>
+              <p class="principle__body" data-i18n="pr.hood.b">I'd rather understand the layer beneath the abstraction than memorize the abstraction.</p>
+            </div>
+          </div>
+
+          <div class="principle">
+            <span class="principle__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path class="m-line" d="M5 19 L19 5"/><path class="m-line" d="M9 5 H19 V15"/></svg></span>
+            <div>
+              <h3 class="principle__title" data-i18n="pr.ship.t">Ship &amp; iterate</h3>
+              <p class="principle__body" data-i18n="pr.ship.b">Get it working and out the door, then make it better.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ================================ PROJECTS ================================ -->
     <section id="projects" class="section reveal" aria-labelledby="projects-title">
       <div class="section__inner">
-        <h2 id="projects-title" class="section__title">
+        <h2 id="projects-title" class="section__title" data-i18n="sec.projects">
           <span class="section__hash" aria-hidden="true">#</span> projects
         </h2>
 
@@ -643,7 +714,7 @@
           </li>
         </ul>
 
-        <p class="projects__more">
+        <p class="projects__more" data-i18n="projects.more">
           More experiments and works-in-progress live on
           <a
             href="https://github.com/githubuseradmin"
@@ -659,7 +730,7 @@
   <!-- ================================ FOOTER ================================ -->
   <footer class="site-footer">
     <div class="site-footer__inner">
-      <p class="site-footer__note">
+      <p class="site-footer__note" data-i18n="footer.note">
         Built with AI assistance · hand-checked.
       </p>
       <p class="site-footer__meta">
@@ -677,6 +748,7 @@
   <!-- Project data (walkthrough overlays) loads before the behaviour script;
        both use defer, so load order is preserved. -->
   <script src="projects.js" defer></script>
+  <script src="motifs.js" defer></script>
   <script src="app.js" defer></script>
 </body>
 </html>

@@ -19,6 +19,7 @@ const {
   parseProjectHash
 } = require("../app.js");
 const { PROJECTS } = require("../projects.js");
+const MOTIFS = require("../motifs.js");
 
 test("THEMES exposes the two expected values", () => {
   assert.equal(THEMES.DARK, "dark");
@@ -120,6 +121,14 @@ test("every project has the fields the overlay renders", () => {
       assert.ok(l.href && /^https?:\/\//.test(l.href), `${p.id}: link href`);
       assert.ok(l.label && l.kind, `${p.id}: link label/kind`);
     }
+  }
+});
+
+test("every project has an animated SVG motif", () => {
+  for (const p of PROJECTS) {
+    const m = MOTIFS[p.id];
+    assert.ok(typeof m === "string" && m.includes("<svg"), `${p.id}: motif SVG`);
+    assert.ok(m.includes('viewBox="0 0 140 86"'), `${p.id}: motif viewBox`);
   }
 });
 
