@@ -291,6 +291,7 @@
         ]
       },
       links: [
+        { label: "Live demo", kind: "demo", href: PAGES + "/sentinel/" },
         { label: "Code", kind: "code", href: GH + "/sentinel" },
         { label: "README", kind: "readme", href: GH + "/sentinel#readme" }
       ]
