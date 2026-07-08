@@ -2,9 +2,18 @@ English | [Русский](README.ru.md)
 
 # Developer portfolio
 
+![CI](https://github.com/githubuseradmin/portfolio/actions/workflows/ci.yml/badge.svg)
+![tests](https://img.shields.io/badge/tests-17_passing-brightgreen)
+![license](https://img.shields.io/badge/license-MIT-blue)
+![built with](https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-informational)
+
+**[▶ Live demo](https://githubuseradmin.github.io/portfolio/)**
+
 A single-page personal portfolio for a self-taught IT generalist
 (networking · security · low-level · DevOps), with a dark
 terminal / hacker / network aesthetic and an optional light theme.
+Zero dependencies, zero build step — ideal to fork as a fast, accessible
+GitHub Pages portfolio.
 
 It is **pure HTML, CSS and JavaScript** — no build step, no framework, no
 runtime dependencies (one optional Google Font). Just static files you can open

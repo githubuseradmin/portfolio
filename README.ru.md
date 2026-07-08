@@ -2,9 +2,18 @@
 
 # Портфолио разработчика
 
+![CI](https://github.com/githubuseradmin/portfolio/actions/workflows/ci.yml/badge.svg)
+![tests](https://img.shields.io/badge/tests-17_passing-brightgreen)
+![license](https://img.shields.io/badge/license-MIT-blue)
+![built with](https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-informational)
+
+**[▶ Живое демо](https://githubuseradmin.github.io/portfolio/)**
+
 Одностраничное персональное портфолио для самоучки-универсала в IT
 (сети · безопасность · низкий уровень · DevOps) в тёмной эстетике
 терминала / хакерского / сетевого стиля и с опциональной светлой темой.
+Ноль зависимостей и никакой сборки — готовый шаблон, чтобы форкнуть быстрое,
+доступное портфолио на GitHub Pages.
 
 Это **чистый HTML, CSS и JavaScript** — без сборки, без фреймворков, без
 зависимостей во время выполнения (один необязательный Google-шрифт). Просто
